@@ -1,0 +1,28 @@
+# This is an example goreleaser.yaml file with some sane defaults.
+# Make sure to check the documentation at http://goreleaser.com
+project_name: unifi-adopt
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goarch:
+      - amd64
+      - arm64
+    goos:
+      - darwin
+      - linux
+      - windows
+    ldflags:
+      - -s -w -X github.com/slashk/unifi-adopt/cmd.version={{.Version}} -X github.com/slashk/unifi-adopt/cmd.commit={{.ShortCommit}} -X github.com/slashk/unifi-adopt/cmd.date={{.Date}}
+universal_binaries:
+  - replace: true
+checksum:
+  name_template: "checksums.txt"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
