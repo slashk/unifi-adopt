@@ -30,4 +30,5 @@ Use "unifi-adopt [command] --help" for more information about a command.
 ### version
 
 ```bash
-/bin/sh: ./dist/unifi-adopt_darwin_arm64/dd-cost: No such file or directory
+0.0.0-SNAPSHOT-none, commit none, built at 2022-11-25T19:43:43Z
+```
