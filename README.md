@@ -1,6 +1,5 @@
 # unifi-adopt
 
-
 ## Usage
 
 ```bash
@@ -26,9 +25,8 @@ Flags:
 Use "unifi-adopt [command] --help" for more information about a command.
 ```
 
-
 ### version
 
 ```bash
-0.0.0-SNAPSHOT-none, commit none, built at 2022-11-25T19:43:43Z
+0.1.2, commit 8da75d0, built at 2022-11-25T19:53:00Z
 ```

@@ -11,13 +11,11 @@ build:
 
 readme: build
 	echo "# unifi-adopt\n" > README.md
-	echo "" >> README.md
 	echo "## Usage" >> README.md
 	echo "" >> README.md
 	echo "\`\`\`bash" >> README.md
 	./unifi-adopt -h >> README.md
 	echo "\`\`\`" >> README.md
-	echo "" >> README.md
 	echo "" >> README.md
 	echo "### version" >> README.md
 	echo "" >> README.md
