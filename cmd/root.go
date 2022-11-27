@@ -10,8 +10,9 @@ import (
 
 var cfgFile string
 var debug bool
+var pushoverMessage bool
 var WAP []string
-var USERNAME, CERTFILE, INFORMURL, WAPLIST string
+var USERNAME, CERTFILE, INFORMURL, WAPLIST, PUSHOVER_APP_TOKEN, PUSHOVER_USER_KEY string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -29,8 +30,12 @@ by SSHing to it and checking it's config. If it is not connected, it will set th
 		for x := range w {
 			connected, err := checkConnected(w[x], USERNAME, CERTFILE)
 			if err != nil {
-				// figure out error protocol
 				fmt.Println(err)
+				if pushoverMessage {
+					if checkPushoverKeys(PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN) {
+						sendPush(fmt.Sprintf("%s cannot be contacted", w[x]), PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN)
+					}
+				}
 			}
 			if !connected {
 				if debug {
@@ -41,6 +46,11 @@ by SSHing to it and checking it's config. If it is not connected, it will set th
 					fmt.Printf("%s cannot be configured: %v", w[x], err2)
 				} else {
 					fmt.Printf("%s set to informed URL", w[x])
+				}
+				if pushoverMessage {
+					if checkPushoverKeys(PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN) {
+						sendPush(fmt.Sprintf("%s inform URL set", w[x]), PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN)
+					}
 				}
 			}
 		}
@@ -65,6 +75,7 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.unifi-adopt.yaml)")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "debug to see all network calls")
+	rootCmd.PersistentFlags().BoolVarP(&pushoverMessage, "pushover", "p", false, "send pushover messags on all actions")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -99,6 +110,8 @@ func initConfig() {
 	USERNAME = viper.GetString("USERNAME")
 	INFORMURL = viper.GetString("INFORMURL")
 	CERTFILE = viper.GetString("CERTFILE")
+	PUSHOVER_APP_TOKEN = viper.GetString("PUSHOVER_APP_TOKEN")
+	PUSHOVER_USER_KEY = viper.GetString("PUSHOVER_USER_KEY")
 	if debug {
 		viper.Debug()
 	}

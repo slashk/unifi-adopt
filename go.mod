@@ -3,6 +3,7 @@ module github.com/slashk/unifi-adopt
 go 1.19
 
 require (
+	github.com/gregdel/pushover v1.1.0
 	github.com/helloyi/go-sshclient v1.1.1
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/spf13/cobra v1.6.1
