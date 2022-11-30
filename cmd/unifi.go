@@ -46,7 +46,7 @@ func checkConnected(ip, username, certfile string) (bool, error) {
 //
 // exit: 0
 func setInform(ip, username, certfile, informURL string) (bool, error) {
-	client, err := sshclient.DialWithKey(ip, username, certfile)
+	client, err := sshclient.DialWithKey(ip+":22", username, certfile)
 	if err != nil {
 		fmt.Println(err)
 	}
