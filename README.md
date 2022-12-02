@@ -20,7 +20,7 @@ Flags:
       --config string   config file (default is $HOME/.unifi-adopt.yaml)
   -d, --debug           debug to see all network calls
   -h, --help            help for unifi-adopt
-  -p, --pushover        send pushover messags on all actions
+  -p, --pushover        send pushover messages on all actions
   -t, --toggle          Help message for toggle
 
 Use "unifi-adopt [command] --help" for more information about a command.
@@ -29,5 +29,5 @@ Use "unifi-adopt [command] --help" for more information about a command.
 ### version
 
 ```bash
-1.0.0, commit a193bbe, built at 2022-12-02T03:57:53Z
+1.1.0, commit 909b888, built at 2022-12-02T21:50:37Z
 ```
