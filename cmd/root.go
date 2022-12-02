@@ -75,7 +75,7 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.unifi-adopt.yaml)")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "debug to see all network calls")
-	rootCmd.PersistentFlags().BoolVarP(&pushoverMessage, "pushover", "p", false, "send pushover messags on all actions")
+	rootCmd.PersistentFlags().BoolVarP(&pushoverMessage, "pushover", "p", false, "send pushover messages on all actions")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -115,6 +115,10 @@ func initConfig() {
 	CERTFILE = viper.GetString("CERTFILE")
 	PUSHOVER_APP_TOKEN = viper.GetString("PUSHOVER_APP_TOKEN")
 	PUSHOVER_USER_KEY = viper.GetString("PUSHOVER_USER_KEY")
+	if pushoverMessage && !checkPushoverKeys(PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN) {
+		fmt.Fprintln(os.Stderr, "No usable pushover keys found. Please create them in ~/.unifi-adopt conifg file.")
+		os.Exit(1)
+	}
 	if debug {
 		viper.Debug()
 	}
