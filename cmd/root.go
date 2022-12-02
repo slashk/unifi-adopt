@@ -19,7 +19,7 @@ var rootCmd = &cobra.Command{
 	Use:   "unifi-adopt",
 	Short: "Monitor your Ubiqiti WAPs to ensure that stay connected to your Unifi server",
 	Long: `Monitor your Ubiqiti WAPs to ensure that stay connected to your Unifi server.
-This tool will read a config file (defaults to ~/.unifi-adopt) and query each WAP configured 
+This tool will read a config file (defaults to ~/.unifi-adopt) and query each WAP configured
 by SSHing to it and checking it's config. If it is not connected, it will set the inform-url to your configuration.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if debug {
@@ -45,7 +45,7 @@ by SSHing to it and checking it's config. If it is not connected, it will set th
 				if err2 != nil || !informed {
 					fmt.Printf("%s cannot be configured: %v", w[x], err2)
 				} else {
-					fmt.Printf("%s set to informed URL", w[x])
+					fmt.Printf("%s set to informed URL\n", w[x])
 				}
 				if pushoverMessage {
 					if checkPushoverKeys(PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN) {
