@@ -15,7 +15,7 @@ func sendPush(m, PushoverRecp, PushoverToken string) error {
 	recipient := pushover.NewRecipient(PushoverRecp)
 	message := &pushover.Message{
 		Message:  m,
-		Title:    "Datadog Charges",
+		Title:    "Unifi InformURL Updated",
 		Priority: pushover.PriorityNormal,
 		URL:      ddURL,
 		URLTitle: "Datadog Usage Link",
