@@ -20,7 +20,7 @@ var rootCmd = &cobra.Command{
 	Short: "Monitor your Ubiqiti WAPs to ensure that stay connected to your Unifi server",
 	Long: `Monitor your Ubiqiti WAPs to ensure that stay connected to your Unifi server.
 This tool will read a config file (defaults to ~/.unifi-adopt) and query each WAP configured
-by SSHing to it and checking it's config. If it is not connected, it will set the inform-url to your configuration.`,
+by SSHing to it and set the inform-url to your configuration.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if debug {
 			printConfigs()
@@ -105,6 +105,9 @@ func initConfig() {
 		if debug {
 			fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 		}
+	} else {
+		fmt.Fprintln(os.Stderr, "No configuration file found. Please create one in ~/.unifi-adopt")
+		os.Exit(1)
 	}
 	WAPLIST = viper.GetString("WAPLIST")
 	USERNAME = viper.GetString("USERNAME")

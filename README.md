@@ -5,7 +5,7 @@
 ```bash
 Monitor your Ubiqiti WAPs to ensure that stay connected to your Unifi server.
 This tool will read a config file (defaults to ~/.unifi-adopt) and query each WAP configured
-by SSHing to it and checking it's config. If it is not connected, it will set the inform-url to your configuration.
+by SSHing to it and set the inform-url to your configuration.
 
 Usage:
   unifi-adopt [flags]
@@ -29,5 +29,5 @@ Use "unifi-adopt [command] --help" for more information about a command.
 ### version
 
 ```bash
-0.1.2, commit 8da75d0, built at 2022-11-25T19:53:00Z
+1.0.0, commit a193bbe, built at 2022-12-02T03:57:53Z
 ```
