@@ -1,6 +1,6 @@
 PHONEY: release test 
 
-release: test readme
+release: test
 	goreleaser release --clean --config=.goreleaser.yml
 
 snapshot:
