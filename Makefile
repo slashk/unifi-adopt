@@ -4,7 +4,7 @@ release: test readme
 	goreleaser release --clean --config=.goreleaser.yml
 
 snapshot:
-	goreleaser build --clean --config=.goreleaser.yml --snapshot
+	goreleaser build --config=.goreleaser.yml --snapshot
 
 build: 
 	go build .
