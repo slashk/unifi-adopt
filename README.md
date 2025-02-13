@@ -29,5 +29,5 @@ Use "unifi-adopt [command] --help" for more information about a command.
 ### version
 
 ```bash
-1.1.4, commit 8a97c4a, built at 2025-02-13T21:55:27Z
+1.1.6-SNAPSHOT-b480daf, commit b480daf, built at 2025-02-13T22:11:12Z
 ```
