@@ -29,5 +29,4 @@ Use "unifi-adopt [command] --help" for more information about a command.
 ### version
 
 ```bash
-1.1.6-SNAPSHOT-b480daf, commit b480daf, built at 2025-02-13T22:11:12Z
-```
+/bin/sh: ./dist/unifi-adopt_darwin_arm64_v8.0/unifi-adopt: No such file or directory
