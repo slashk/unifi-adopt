@@ -1,10 +1,10 @@
 PHONEY: release test 
 
 release: test readme
-	goreleaser release --rm-dist --config=.goreleaser.yml
+	goreleaser release --clean --config=.goreleaser.yml
 
 snapshot:
-	goreleaser build --rm-dist --config=.goreleaser.yml --snapshot
+	goreleaser build --clean --config=.goreleaser.yml --snapshot
 
 build: 
 	go build .
