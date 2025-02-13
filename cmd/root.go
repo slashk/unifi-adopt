@@ -40,6 +40,7 @@ by SSHing to it and set the inform-url to your configuration.`,
 						sendPush(fmt.Sprintf("%s cannot be contacted", w[x]), PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN)
 					}
 				}
+				continue
 			}
 			if !connected {
 				if debug {
@@ -95,7 +96,6 @@ func initConfig() {
 		// Find home directory.
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
-
 		// Search config in home directory with name ".unifi-adopt" (without extension).
 		viper.AddConfigPath(home)
 		viper.AddConfigPath(".")
