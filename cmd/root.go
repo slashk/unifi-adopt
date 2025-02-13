@@ -26,7 +26,11 @@ by SSHing to it and set the inform-url to your configuration.`,
 			printConfigs()
 		}
 		// TODO fixme
-		w, _ := parseWAP(WAPLIST)
+		w, err := parseWAP(WAPLIST)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 		for x := range w {
 			connected, err := checkConnected(w[x], USERNAME, CERTFILE)
 			if err != nil {
@@ -94,6 +98,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".unifi-adopt" (without extension).
 		viper.AddConfigPath(home)
+		viper.AddConfigPath(".")
 		viper.SetConfigType("env")
 		viper.SetConfigName(".unifi-adopt")
 	}
@@ -116,11 +121,12 @@ func initConfig() {
 	PUSHOVER_APP_TOKEN = viper.GetString("PUSHOVER_APP_TOKEN")
 	PUSHOVER_USER_KEY = viper.GetString("PUSHOVER_USER_KEY")
 	if pushoverMessage && !checkPushoverKeys(PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN) {
-		fmt.Fprintln(os.Stderr, "No usable pushover keys found. Please create them in ~/.unifi-adopt conifg file.")
+		fmt.Fprintln(os.Stderr, "No usable pushover keys found. Please create them in ~/.unifi-adopt config file.")
 		os.Exit(1)
 	}
 	if debug {
 		viper.Debug()
+		fmt.Println("end config setting")
 	}
 }
 
