@@ -14,6 +14,9 @@ const informCommand = "mca-cli-op set-inform http://%s/inform; echo \"exit:\" $?
 
 // checkConnected queries the WAP for it's connection status through the info command
 func checkConnected(ip, username, certfile string) (bool, error) {
+	if debug {
+		fmt.Println("Checking ", ip)
+	}
 	client, err := sshclient.DialWithKey(ip+":22", username, certfile)
 	if err != nil {
 		fmt.Println(err)
@@ -37,6 +40,9 @@ func checkConnected(ip, username, certfile string) (bool, error) {
 		} else {
 			fmt.Println(ws["Hostname"], " is connected to Unifi")
 		}
+	}
+	if debug {
+		fmt.Println("completed check")
 	}
 	return true, nil
 }
