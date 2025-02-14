@@ -115,7 +115,7 @@ func initConfig() {
 		os.Exit(1)
 	}
 	WAPLIST = viper.GetString("WAPLIST")
-	UNAME = viper.GetString("USERNAME")
+	UNAME = viper.GetString("UNAME")
 	INFORMURL = viper.GetString("INFORMURL")
 	CERTFILE = viper.GetString("CERTFILE")
 	PUSHOVER_APP_TOKEN = viper.GetString("PUSHOVER_APP_TOKEN")
