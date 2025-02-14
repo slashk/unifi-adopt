@@ -17,16 +17,19 @@ func checkConnected(ip, username, certfile string) (bool, error) {
 	if debug {
 		fmt.Println("Checking ", ip)
 	}
+	if debug {
+		fmt.Printf("ssh -i %s %s@%v\n", certfile, username, ip)
+	}
 	client, err := sshclient.DialWithKey(ip+":22", username, certfile)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("dial error: ", err)
 		return false, err
 	}
 	defer client.Close()
 	out, err := client.Cmd(infoCommand).SmartOutput()
 	if err != nil {
 		// the 'out' is stderr output
-		fmt.Println("There was an error:", err, "\n", out)
+		fmt.Println("ssh command error:", err, "\n", out)
 		return false, err
 	}
 	// the 'out' is stdout output
