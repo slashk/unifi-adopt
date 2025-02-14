@@ -24,4 +24,4 @@ readme: build
 	echo "\`\`\`" >> README.md
 
 test:
-	go test -cover -v . ./cmd/
+	go test -coverprofile=cov.xml -v . ./cmd/

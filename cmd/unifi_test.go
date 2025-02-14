@@ -73,3 +73,80 @@ func Test_ParseWAP(t *testing.T) {
 		So(parseIPs, ShouldBeNil)
 	})
 }
+
+func TestParseInfoValidInput(t *testing.T) {
+	s := `Model: Router
+Version: 1.2.3
+MAC Address: 00:1A:2B:3C:4D:5E
+IP Address: 192.168.1.1
+Hostname: router.local
+Uptime: 1 day
+Status: Connected`
+	expected := map[string]string{
+		"Model":       "Router",
+		"Version":     "1.2.3",
+		"MAC Address": "00:1A:2B:3C:4D:5E",
+		"IP Address":  "192.168.1.1",
+		"Hostname":    "router.local",
+		"Uptime":      "1 day",
+		"Status":      "Connected",
+	}
+	result, err := parseInfo(s)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+	for k, v := range expected {
+		if result[k] != v {
+			t.Errorf("Expected %s to be %s but got %s", k, v, result[k])
+		}
+	}
+}
+
+func TestParseInfoInvalidInput(t *testing.T) {
+	s := `Model: Router
+Version: 1.2.3
+MAC Address: 00:1A:2B:3C:4D:5E
+IP Address: 192.168.1.1
+Hostname: router.local`
+	_, err := parseInfo(s)
+	if err == nil || err.Error() != "missing info configs" {
+		t.Errorf("Expected error 'missing info configs' but got %v", err)
+	}
+}
+
+func TestParseInfoExtraData(t *testing.T) {
+	s := `Model: Router
+Version: 1.2.3
+MAC Address: 00:1A:2B:3C:4D:5E
+IP Address: 192.168.1.1
+Hostname: router.local
+Uptime: 1 day
+Status: Connected
+Extra: Data`
+	expected := map[string]string{
+		"Model":       "Router",
+		"Version":     "1.2.3",
+		"MAC Address": "00:1A:2B:3C:4D:5E",
+		"IP Address":  "192.168.1.1",
+		"Hostname":    "router.local",
+		"Uptime":      "1 day",
+		"Status":      "Connected",
+	}
+	result, err := parseInfo(s)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+	for k, v := range expected {
+		if result[k] != v {
+			t.Errorf("Expected %s to be %s but got %s", k, v, result[k])
+		}
+	}
+}
+
+func TestParseInfoEmptyInput(t *testing.T) {
+	s := ""
+	_, err := parseInfo(s)
+	if err == nil || err.Error() != "missing info configs" {
+		t.Errorf("Expected error 'missing info configs' but got %v", err)
+	}
+}
