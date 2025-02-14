@@ -12,7 +12,7 @@ var cfgFile string
 var debug bool
 var pushoverMessage bool
 var WAP []string
-var USERNAME, CERTFILE, INFORMURL, WAPLIST, PUSHOVER_APP_TOKEN, PUSHOVER_USER_KEY string
+var UNAME, CERTFILE, INFORMURL, WAPLIST, PUSHOVER_APP_TOKEN, PUSHOVER_USER_KEY string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -32,7 +32,7 @@ by SSHing to it and set the inform-url to your configuration.`,
 			os.Exit(1)
 		}
 		for x := range w {
-			connected, err := checkConnected(w[x], USERNAME, CERTFILE)
+			connected, err := checkConnected(w[x], UNAME, CERTFILE)
 			if err != nil {
 				fmt.Println(err)
 				if pushoverMessage {
@@ -46,7 +46,7 @@ by SSHing to it and set the inform-url to your configuration.`,
 				if debug {
 					fmt.Printf("%s is not connected: %s", w[x], err)
 				}
-				informed, err2 := setInform(w[x], USERNAME, CERTFILE, INFORMURL)
+				informed, err2 := setInform(w[x], UNAME, CERTFILE, INFORMURL)
 				if err2 != nil || !informed {
 					fmt.Printf("%s cannot be configured: %v", w[x], err2)
 				} else {
@@ -115,7 +115,7 @@ func initConfig() {
 		os.Exit(1)
 	}
 	WAPLIST = viper.GetString("WAPLIST")
-	USERNAME = viper.GetString("USERNAME")
+	UNAME = viper.GetString("USERNAME")
 	INFORMURL = viper.GetString("INFORMURL")
 	CERTFILE = viper.GetString("CERTFILE")
 	PUSHOVER_APP_TOKEN = viper.GetString("PUSHOVER_APP_TOKEN")
@@ -131,5 +131,5 @@ func initConfig() {
 }
 
 func printConfigs() {
-	fmt.Printf("WAPS: %v\nUSERNAME: %v\nINFORMURL: %v\nCERTFILE: %v\n", WAPLIST, USERNAME, INFORMURL, CERTFILE)
+	fmt.Printf("WAPS: %v\nUSERNAME: %v\nINFORMURL: %v\nCERTFILE: %v\n", WAPLIST, UNAME, INFORMURL, CERTFILE)
 }
