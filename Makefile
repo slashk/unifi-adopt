@@ -25,3 +25,11 @@ readme: build
 
 test:
 	go test -coverprofile=cov.xml -v . ./cmd/
+
+dep:
+	# go get -u github.com/golang/lint/golint
+	# go get -u github.com/opennota/check/cmd/aligncheck
+	# go get -u github.com/opennota/check/cmd/structcheck
+	# go get -u github.com/opennota/check/cmd/varcheck
+	go get -u
+	go mod tidy
