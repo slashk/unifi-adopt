@@ -41,7 +41,7 @@ func checkConnected(ip, username, certfile string) (bool, error) {
 		if status != "Connected (http://10.0.3.202:30002/inform)" {
 			return false, errors.New(ws["Hostname"] + " " + ws["Status"])
 		} else {
-			fmt.Println(ws["Hostname"], " is connected to Unifi")
+			fmt.Printf("%s (%s) is %s\n", ws["Hostname"], ws["Model"], ws["Status"])
 		}
 	}
 	if debug {

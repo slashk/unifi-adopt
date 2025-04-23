@@ -31,6 +31,10 @@ by SSHing to it and set the inform-url to your configuration.`,
 			fmt.Println(err)
 			os.Exit(1)
 		}
+		_, err = os.Open(CERTFILE)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "SSH certificates unusable: %v", err)
+		}
 		for x := range w {
 			connected, err := checkConnected(w[x], UNAME, CERTFILE)
 			if err != nil {
@@ -43,9 +47,7 @@ by SSHing to it and set the inform-url to your configuration.`,
 				continue
 			}
 			if !connected {
-				if debug {
-					fmt.Printf("%s is not connected: %s", w[x], err)
-				}
+				fmt.Printf("%s is not connected: %s", w[x], err)
 				informed, err2 := setInform(w[x], UNAME, CERTFILE, INFORMURL)
 				if err2 != nil || !informed {
 					fmt.Printf("%s cannot be configured: %v", w[x], err2)
@@ -78,7 +80,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.unifi-adopt.yaml)")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "$HOME/.unifi-adopt", "config file")
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "debug to see all network calls")
 	rootCmd.PersistentFlags().BoolVarP(&pushoverMessage, "pushover", "p", false, "send pushover messages on all actions")
 
@@ -89,9 +91,12 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+	if debug {
+		fmt.Printf("\nUsing config file: %s\n", cfgFile)
+	}
 	if cfgFile != "" {
-		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
+		// viper.SetConfigType("yaml")
 	} else {
 		// Find home directory.
 		home, err := os.UserHomeDir()
@@ -99,23 +104,36 @@ func initConfig() {
 		// Search config in home directory with name ".unifi-adopt" (without extension).
 		viper.AddConfigPath(home)
 		viper.AddConfigPath(".")
-		viper.SetConfigType("env")
+		// viper.SetConfigType("yaml")
+		// viper.SetConfigType("env")
 		viper.SetConfigName(".unifi-adopt")
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	// viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		if debug {
-			fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+	err := viper.ReadInConfig()
+	if err != nil {
+		_, ok := err.(viper.ConfigFileNotFoundError)
+		if ok {
+			fmt.Fprintln(os.Stderr, "No configuration file found:", viper.ConfigFileUsed())
 		}
-	} else {
-		fmt.Fprintln(os.Stderr, "No configuration file found. Please create one in ~/.unifi-adopt")
-		os.Exit(1)
+		_, ok = err.(viper.ConfigMarshalError)
+		if ok {
+			fmt.Fprintln(os.Stderr, "config marshall error:", viper.ConfigFileUsed())
+		}
+		_, ok = err.(viper.ConfigParseError)
+		if ok {
+			fmt.Fprintln(os.Stderr, "config parsing error:", viper.ConfigFileUsed())
+		}
+		if debug {
+			fmt.Println(err)
+			viper.Debug()
+		}
+		// os.Exit(1)
 	}
 	WAPLIST = viper.GetString("WAPLIST")
-	UNAME = viper.GetString("UNAME")
+	UNAME = viper.GetString("USERNAME")
 	INFORMURL = viper.GetString("INFORMURL")
 	CERTFILE = viper.GetString("CERTFILE")
 	PUSHOVER_APP_TOKEN = viper.GetString("PUSHOVER_APP_TOKEN")

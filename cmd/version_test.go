@@ -29,7 +29,7 @@ func Test_ExecuteVersion(t *testing.T) {
 		actual := new(bytes.Buffer)
 		rootCmd.SetOut(actual)
 		rootCmd.SetErr(actual)
-		rootCmd.SetArgs([]string{"version"})
+		rootCmd.SetArgs([]string{"version", "--config", "../test-unifi-adopt.yaml"})
 		rootCmd.Execute()
 
 		expected := "dev, commit none, built at unknown\n"
