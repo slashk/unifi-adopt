@@ -1,6 +1,5 @@
 /*
-Copyright © 2022 Ken Pepple <kpepple@weedmaps.com>
-
+Copyright © 2022 Ken Pepple <ken@pepple.io>
 */
 package main
 

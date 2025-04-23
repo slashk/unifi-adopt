@@ -1,4 +1,4 @@
-package cmd /* Copyright © 2022 Ken Pepple <kpepple@weedmaps.com> */
+package cmd /* Copyright © 2022 Ken Pepple <ken@pepple.io> */
 
 import (
 	"bytes"
