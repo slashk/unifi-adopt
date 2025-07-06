@@ -5,3 +5,7 @@ unifi-adopt.exe
 .DS_Store
 unifi-adopt.env
 cov.xml
+test-unifi-adopt.env
+test-unifi-adopt.yaml
+unifi
+unifi.pub
