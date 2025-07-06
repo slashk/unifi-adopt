@@ -4,12 +4,12 @@ release: test
 	goreleaser release --clean --config=.goreleaser.yml
 
 snapshot:
-	goreleaser build --config=.goreleaser.yml --snapshot
+	goreleaser build --config=.goreleaser.yml --snapshot --clean
 
 build: 
 	go build .
 
-readme: build
+readme: build snapshot
 	echo "# unifi-adopt\n" > README.md
 	echo "## Usage" >> README.md
 	echo "" >> README.md

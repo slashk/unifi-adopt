@@ -17,7 +17,7 @@ Available Commands:
   version     Prints the current version
 
 Flags:
-      --config string   config file (default is $HOME/.unifi-adopt.yaml)
+  -c, --config string   config file (default "$HOME/.unifi-adopt")
   -d, --debug           debug to see all network calls
   -h, --help            help for unifi-adopt
   -p, --pushover        send pushover messages on all actions
@@ -29,5 +29,5 @@ Use "unifi-adopt [command] --help" for more information about a command.
 ### version
 
 ```bash
-1.1.22, commit ec9109e, built at 2025-02-14T06:53:45Z
+1.2.0-SNAPSHOT-00c308e, commit 00c308e, built at 2025-07-06T18:00:40Z
 ```
