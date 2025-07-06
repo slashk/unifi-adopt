@@ -127,6 +127,7 @@ func initConfig() {
 			fmt.Fprintln(os.Stderr, "config parsing error:", viper.ConfigFileUsed())
 		}
 		if debug {
+			fmt.Println("Error reading in viper config file")
 			fmt.Println(err)
 			viper.Debug()
 		}
