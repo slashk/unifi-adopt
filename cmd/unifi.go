@@ -39,7 +39,7 @@ func checkConnected(ip, username, certfile string) (bool, error) {
 	}
 	if status, exists := ws["Status"]; exists {
 		if status != "Connected (http://10.0.3.202:30002/inform)" {
-			return false, errors.New(ws["Hostname"] + " " + ws["Status"])
+			return false, nil
 		} else {
 			fmt.Printf("%s (%s) is %s\n", ws["Hostname"], ws["Model"], ws["Status"])
 		}

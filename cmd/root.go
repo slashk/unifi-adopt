@@ -38,13 +38,13 @@ by SSHing to it and set the inform-url to your configuration.`,
 		for x := range w {
 			connected, err := checkConnected(w[x], UNAME, CERTFILE)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println("ssh connection error: ", err)
 				if pushoverMessage {
 					if checkPushoverKeys(PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN) {
 						sendPush(fmt.Sprintf("%s cannot be contacted", w[x]), PUSHOVER_USER_KEY, PUSHOVER_APP_TOKEN)
 					}
 				}
-				continue
+				// continue
 			}
 			if !connected {
 				fmt.Printf("%s is not connected: %s", w[x], err)
